@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import './my_drawer_header.dart';
 import './contacts.dart';
 import './dashboard.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_mate/screens/login_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,8 +23,30 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 126, 119, 255),
-        title: Text("Fitness Mate"),
+        title: const Center(child: Text('Fitness Mate')),       
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.search,
+                  size: 26.0,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () async {
+                  final navigator = Navigator.of(context);
+                  await FirebaseAuth.instance.signOut();
+                  navigator.pushReplacement(
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  );
+                },
+                child: Icon(Icons.logout),
+              )),
+        ],
       ),
       body: container,
       drawer: Drawer(
