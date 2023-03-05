@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_mate/models/user_model.dart';
-import 'package:fitness_mate/screens/home_screen.dart';
+import 'package:fitness_mate/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -170,10 +170,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () async {
-            await Navigator.push(
+          onPressed: () {
+            signUp(emailEditingController.text, passwordEditingController.text);
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => LoginScreen()),
             );
           },
           child: Text(
@@ -298,7 +299,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false);
   }
 }
