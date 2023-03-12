@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^2.7.0
   firebase_auth: ^4.2.9
   fluttertoast: ^8.2.1
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
     - assets/images/profile.png
     - assets/images/logo.png
     - assets/images/login.png
+    - assets/images/bmi.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see
