@@ -1,3 +1,4 @@
+import 'package:fitness_mate/screens/fitness_reminder/reminder_dashboard.dart';
 import 'package:flutter/material.dart';
 import './my_drawer_header.dart';
 import './contacts.dart';
@@ -5,7 +6,6 @@ import './dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_mate/screens/login_screen.dart';
 import 'package:fitness_mate/screens/wellness_reports/bmi_reports_view_screen.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,12 +22,14 @@ class _HomePageState extends State<HomePage> {
       container = DashboardPage();
     } else if (currentPage == DrawerSections.contacts) {
       container = ContactsPage();
-    }    else if (currentPage == DrawerSections.bmireport) {
+    } else if (currentPage == DrawerSections.bmireport) {
       container = BmiReportsView();
+    } else if (currentPage == DrawerSections.reminder) {
+      container = ReminderDashboard();
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Fitness Mate')),       
+        title: const Center(child: Text('Fitness Mate')),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -45,7 +47,8 @@ class _HomePageState extends State<HomePage> {
                   final navigator = Navigator.of(context);
                   await FirebaseAuth.instance.signOut();
                   navigator.pushReplacement(
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
                   );
                 },
                 child: Icon(Icons.logout),
@@ -80,8 +83,10 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.dashboard ? true : false),
           menuItem(2, "Contacts", Icons.people_alt_outlined,
               currentPage == DrawerSections.contacts ? true : false),
-              menuItem(3, "BMI Reports", Icons.people_alt_outlined,
+          menuItem(3, "BMI Reports", Icons.people_alt_outlined,
               currentPage == DrawerSections.bmireport ? true : false),
+          menuItem(4, "Reminders", Icons.alarm,
+              currentPage == DrawerSections.reminder ? true : false),
         ],
       ),
     );
@@ -98,9 +103,10 @@ class _HomePageState extends State<HomePage> {
               currentPage = DrawerSections.dashboard;
             } else if (id == 2) {
               currentPage = DrawerSections.contacts;
-            }
-            else if (id == 3) {
+            } else if (id == 3) {
               currentPage = DrawerSections.bmireport;
+            } else if (id == 4) {
+              currentPage = DrawerSections.reminder;
             }
           });
         },
@@ -137,4 +143,5 @@ enum DrawerSections {
   dashboard,
   contacts,
   bmireport,
+  reminder,
 }
