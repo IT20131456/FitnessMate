@@ -1,3 +1,5 @@
+import 'package:fitness_mate/screens/fitness_reminder/add_reminder.dart';
+import 'package:fitness_mate/services/reminder_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -11,8 +13,20 @@ class ReminderDashboard extends StatefulWidget {
 }
 
 class _ReminderDashboardState extends State<ReminderDashboard> {
+  final TextEditingController _todoTaskNameController = TextEditingController();
+  final TextEditingController _todoCompletionStatusController =
+      TextEditingController();
   Stream<QuerySnapshot> getAllReminders() {
     return FirebaseFirestore.instance.collection('reminders').snapshots();
+  }
+
+  Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return const AddReminder();
+        });
   }
 
   @override
@@ -39,7 +53,8 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
                   ),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(16),
-                    title: Text("Reminder Name : " + documentData['name'],
+                    title: Text(
+                        "Reminder Name : " + documentData['reminderName'],
                         style: TextStyle(fontSize: 18)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,17 +62,17 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Date : " + documentData['name'],
+                        Text("Date : " + documentData['reminderName'],
                             style: TextStyle(fontSize: 16)),
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Time : " + documentData['time'].toString(),
+                        Text("Time : " + documentData['type'].toString(),
                             style: TextStyle(fontSize: 16)),
                         SizedBox(
                           height: 5,
                         ),
-                        Text("Type : " + documentData['type'].toString(),
+                        Text("Type : " + documentData['message'].toString(),
                             style: TextStyle(fontSize: 16)),
                       ],
                     ),
@@ -112,6 +127,10 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
 //   },
 //   child: const Icon(Icons.add),
 // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _create(),
+        child: const Icon(Icons.add),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
