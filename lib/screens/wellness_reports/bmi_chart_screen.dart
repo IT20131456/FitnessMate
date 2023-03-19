@@ -3,8 +3,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_mate/services/bmi_report_service.dart';
 
-class BmiChart extends StatelessWidget {  
-
+class BmiChart extends StatelessWidget {
   List<BmiData> data = [
     BmiData('January', 35.3),
     BmiData('Feb', 28.5),
@@ -18,7 +17,7 @@ class BmiChart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("BMI Chart"),
-        centerTitle: true,       
+        centerTitle: true,
         brightness: Brightness.dark,
       ),
       body: Container(
@@ -26,7 +25,9 @@ class BmiChart extends StatelessWidget {
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(),
           title: ChartTitle(text: 'BMI Trend Over Time'),
-          legend: Legend(isVisible: true,),
+          legend: Legend(
+            isVisible: true,
+          ),
           tooltipBehavior: TooltipBehavior(enable: true),
           series: <ChartSeries<BmiData, String>>[
             LineSeries<BmiData, String>(
@@ -43,20 +44,9 @@ class BmiChart extends StatelessWidget {
   }
 }
 
-class BmiData{
-
+class BmiData {
   final String date;
   final double bmivalue;
 
   BmiData(this.date, this.bmivalue);
-
 }
-
-
-
-
-
-
-
-
-
