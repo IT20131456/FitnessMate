@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_mate/screens/login_screen.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         appBarTheme: AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 36, 55, 30),
+          backgroundColor: Color.fromARGB(255, 7, 167, 13),
         ),
       ),
       home: LoginScreen(),

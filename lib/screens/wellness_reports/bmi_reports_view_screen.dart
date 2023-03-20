@@ -23,12 +23,7 @@ class _BmiReportsViewState extends State<BmiReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("BMI Reports"),
-      //   centerTitle: true,
-      //   brightness: Brightness.dark,
-      // ),
+    return Scaffold(      
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -68,27 +63,7 @@ class _BmiReportsViewState extends State<BmiReportsView> {
                         children: [
                           SizedBox(
                             height: 5,
-                          ),
-                          // Text("Gender : " + documentData['gender'],
-                          //     style: TextStyle(fontSize: 16)),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
-                          // Text("Age : " + documentData['age'].toString(),
-                          //     style: TextStyle(fontSize: 16)),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
-                          // Text("Height : " + documentData['height'].toString(),
-                          //     style: TextStyle(fontSize: 16)),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
-                          // Text("Weight : " + documentData['weight'].toString(),
-                          //     style: TextStyle(fontSize: 16)),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
+                          ),                          
                           Text("BMI Value : " + documentData['bmiValue'],
                               style: TextStyle(fontSize: 16)),
                           SizedBox(

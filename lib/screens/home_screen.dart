@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.dashboard ? true : false),
           menuItem(2, "Contacts", Icons.people_alt_outlined,
               currentPage == DrawerSections.contacts ? true : false),
-              menuItem(3, "BMI Reports", Icons.people_alt_outlined,
+              menuItem(3, "BMI Reports", Icons.health_and_safety_sharp,
               currentPage == DrawerSections.bmireport ? true : false),
         ],
       ),
