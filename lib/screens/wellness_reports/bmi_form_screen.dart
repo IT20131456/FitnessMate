@@ -76,7 +76,7 @@ class _BmiFormState extends State<BmiForm> {
         child: SingleChildScrollView(
           child: Card(
             margin: EdgeInsets.only(left: 10,right: 10,top: 50,bottom: 50),
-            color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.85),
+            color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.95),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               // side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_mate/models/user_model.dart';
 import 'package:fitness_mate/screens/login_screen.dart';
@@ -166,7 +168,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color.fromARGB(255, 89, 64, 255),
+      color: Colors.green,
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
@@ -178,7 +180,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             );
           },
           child: Text(
-            "SignUp",
+            "Sign Up",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -186,50 +188,74 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       appBar: AppBar(
+        title:Text(" Register"),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 89, 64, 255)),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             // passing this to our root
             Navigator.of(context).pop();
           },
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset(
-                          "assets/images/login.png",
-                          fit: BoxFit.contain,
-                        )),
-                    SizedBox(height: 45),
-                    firstNameField,
-                    SizedBox(height: 20),
-                    secondNameField,
-                    SizedBox(height: 20),
-                    emailField,
-                    SizedBox(height: 20),
-                    passwordField,
-                    SizedBox(height: 20),
-                    confirmPasswordField,
-                    SizedBox(height: 20),
-                    signUpButton,
-                    SizedBox(height: 15),
-                  ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/login.jpg"),
+            fit: BoxFit.cover,
+            opacity: 0.8,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: 700,
+              child: Card(
+                color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.7),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(10),
+                //   // side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                // ),
+                child: Container(
+                  color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+                  child: Padding(
+                    padding: const EdgeInsets.all(35.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 0,
+                            // child: Image.asset(
+                            //   "assets/images/login.png",
+                            //   fit: BoxFit.contain,
+                            // )
+                          ),
+                          SizedBox(height: 5),
+                          firstNameField,
+                          SizedBox(height: 35),
+                          secondNameField,
+                          SizedBox(height: 35),
+                          emailField,
+                          SizedBox(height: 35),
+                          passwordField,
+                          SizedBox(height: 35),
+                          confirmPasswordField,
+                          SizedBox(height: 50),
+                          signUpButton,
+                          SizedBox(height: 15),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
