@@ -1,4 +1,5 @@
 import 'package:fitness_mate/screens/fitness_reminder/add_reminder.dart';
+import 'package:fitness_mate/screens/fitness_reminder/edit_reminder.dart';
 import 'package:fitness_mate/services/reminder_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,6 +28,24 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
         builder: (BuildContext ctx) {
           return const AddReminder();
         });
+  }
+
+  Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
+    // if (documentSnapshot != null) {
+    //   _todoTaskNameController.text = documentSnapshot['taskName'];
+    //   _todoCompletionStatusController.text =
+    //       documentSnapshot['completionStatus'].toString();
+    // }
+
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext ctx) {
+        return EditReminder(
+          documentSnapshot: documentSnapshot,
+        );
+      },
+    );
   }
 
   Future<void> _delete(String reminderId) async {
@@ -99,7 +118,8 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
                           children: [
                             IconButton(
                               icon: const Icon(Icons.edit),
-                              color: Colors.green, onPressed: () {},
+                              color: Colors.green,
+                              onPressed: () => _update(documents[index]),
                               // onPressed: () => Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
