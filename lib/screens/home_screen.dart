@@ -1,4 +1,5 @@
 import 'package:fitness_mate/screens/fitness_reminder/reminder_dashboard.dart';
+import 'package:fitness_mate/screens/workouts/workouts_screen.dart';
 import 'package:flutter/material.dart';
 import './my_drawer_header.dart';
 import './contacts.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_mate/screens/login_screen.dart';
 import 'package:fitness_mate/screens/wellness_reports/bmi_reports_view_screen.dart';
 import 'package:fitness_mate/screens/meal_logger/meal_logger_main.dart';
+import 'package:fitness_mate/screens/workouts/workouts_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,6 +32,12 @@ class _HomePageState extends State<HomePage> {
     } else if (currentPage == DrawerSections.mealLogger) {
       container = MealLoggerMainScreen();
     }
+    
+     else if (currentPage == DrawerSections.workouts) {
+      container = Workouts();
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Fitness Mate')),
@@ -92,6 +100,8 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.reminder ? true : false),
           menuItem(5, "Meal Logger", Icons.food_bank_outlined,
               currentPage == DrawerSections.mealLogger ? true : false),
+          menuItem(6, "Workouts", Icons.fitness_center,
+              currentPage == DrawerSections.workouts ? true : false),
         ],
       ),
     );
@@ -114,6 +124,8 @@ class _HomePageState extends State<HomePage> {
               currentPage = DrawerSections.reminder;
             } else if (id == 5) {
               currentPage = DrawerSections.mealLogger;
+            } else if (id == 6) {
+              currentPage = DrawerSections.workouts;
             }
           });
         },
@@ -152,4 +164,5 @@ enum DrawerSections {
   bmireport,
   reminder,
   mealLogger,
+  workouts,
 }
