@@ -9,11 +9,14 @@ class ReminderRepository {
     return _reminder;
   }
 
-  Future addReminder(String name, String type, String message) async {
+  Future addReminder(String name, String type, String message, String date,
+      String time) async {
     return await _reminder.add({
       "reminderName": name,
       "type": type,
       "message": message,
+      "date": date,
+      "time": time,
     });
   }
 

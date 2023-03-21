@@ -29,92 +29,112 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
         });
   }
 
+  Future<void> _delete(String reminderId) async {
+    //await _todo.doc(productId).delete();
+    await ReminderRepository().deleteReminder(reminderId);
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('You have Successfully Cancelled the Reminder')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-        stream: getAllReminders(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: documents.length,
-              itemBuilder: (BuildContext context, int index) {
-                final Map<String, dynamic> documentData =
-                    documents[index].data()! as Map<String, dynamic>;
-                // DateTime date =
-                //     DateTime.parse(documentData['date'].toDate().toString());
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/fitness1.jpg"),
+            fit: BoxFit.cover,
+            opacity: 0.8,
+          ),
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: getAllReminders(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
+              return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final Map<String, dynamic> documentData =
+                      documents[index].data()! as Map<String, dynamic>;
+                  // DateTime date =
+                  //     DateTime.parse(documentData['date'].toDate().toString());
 
-                return Card(
-                  margin: const EdgeInsets.all(18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                  ),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(16),
-                    title: Text(
-                        "Reminder Name : " + documentData['reminderName'],
-                        style: TextStyle(fontSize: 18)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Date : " + documentData['reminderName'],
-                            style: TextStyle(fontSize: 16)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Time : " + documentData['type'].toString(),
-                            style: TextStyle(fontSize: 16)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Type : " + documentData['message'].toString(),
-                            style: TextStyle(fontSize: 16)),
-                      ],
+                  return Card(
+                    margin: const EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side:
+                          const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
-                    // trailing: SizedBox(
-                    //   width: 100,
-                    //   child: Row(
-                    //     children: [
-                    //       IconButton(
-                    //         icon: const Icon(Icons.edit),
-                    //         color: Colors.green,
-                    //         onPressed: () => Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //             builder: (context) => BmiFormUpdate(
-                    //               documentSnapshot: documents[index],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       IconButton(
-                    //           icon: const Icon(Icons.delete),
-                    //           color: Colors.red,
-                    //           onPressed: () => _delete(documents[index].id)),
-                    //     ],
-                    //   ),
-                    // ),
-                    // onTap: () {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => BmiReport(
-                    //               documentSnapshot: documents[index])));
-                    // },
-                  ),
-                );
-              },
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      title: Text(documentData['reminderName'],
+                          style: const TextStyle(fontSize: 18)),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text("Date : " + documentData['reminderName'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text("Time : " + documentData['type'].toString(),
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text("Type : " + documentData['message'].toString(),
+                              style: const TextStyle(fontSize: 16)),
+                        ],
+                      ),
+                      trailing: SizedBox(
+                        width: 100,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              color: Colors.green, onPressed: () {},
+                              // onPressed: () => Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => BmiFormUpdate(
+                              //       documentSnapshot: documents[index],
+                              //     ),
+                              //   ),
+                              // ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              color: Colors.red,
+                              onPressed: () => _delete(documents[index].id),
+                              //onPressed: () => _delete(documents[index].id)),
+                            )
+                          ],
+                        ),
+                      ),
+                      // onTap: () {
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => BmiReport(
+                      //               documentSnapshot: documents[index])));
+                      // },
+                    ),
+                  );
+                },
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
 //       floatingActionButton: FloatingActionButton(
 //   onPressed: () {
