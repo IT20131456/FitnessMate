@@ -40,6 +40,13 @@ dependencies:
   firebase_auth: ^4.2.9
   fluttertoast: ^8.2.1
   date_time_picker: ^2.1.0
+  google_fonts: ^2.0.0
+  audioplayers: ^3.0.1
+
+  flutter_local_notifications: ^13.0.0
+  timezone: ^0.9.1
+  flutter_native_timezone: ^2.0.0
+  syncfusion_flutter_charts: ^20.4.54
   flutter_dotenv: ^5.0.2
   http: ^0.13.5
 
@@ -74,11 +81,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true  
   assets:
-    - assets/images/profile.png
+    - assets/images/profile.jpg
     - assets/images/logo.png
-    - assets/images/login.png
+    - assets/images/login.jpg   
     - assets/images/bmi.png
-    - .env
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

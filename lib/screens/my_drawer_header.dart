@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
@@ -9,7 +11,8 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 126, 119, 255),
+      // color: Color.fromARGB(255, 7, 167, 13),
+      color: Color(0xFF40D876),
       width: double.infinity,
       height: 200,
       padding: EdgeInsets.only(top: 20.0),
@@ -22,7 +25,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage('assets/images/profile.png'),
+                image: AssetImage('assets/images/profile.jpg'),
               ),
             ),
           ),
@@ -31,7 +34,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           Text(
-            "info@fitnessmate.dev",
+            "info@fitnessmate.com",
             style: TextStyle(
               color: Colors.grey[200],
               fontSize: 14,
