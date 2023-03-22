@@ -40,6 +40,8 @@ dependencies:
   firebase_auth: ^4.2.9
   fluttertoast: ^8.2.1
   date_time_picker: ^2.1.0
+  flutter_dotenv: ^5.0.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/login.png
     - assets/images/bmi.png
+    - .env
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

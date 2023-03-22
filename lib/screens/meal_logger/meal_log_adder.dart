@@ -1,7 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+import 'package:fitness_mate/models/meal_log_model.dart';
+import 'package:fitness_mate/repositories/meal_logger_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MealLogAdder extends StatefulWidget {
   const MealLogAdder({super.key});
@@ -11,18 +14,13 @@ class MealLogAdder extends StatefulWidget {
 }
 
 class _MealLogAdderState extends State<MealLogAdder> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _mealLogRepository = MealLogRepository();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _caloriesController = TextEditingController();
-  final TextEditingController _proteinController = TextEditingController();
-  final TextEditingController _carbsController = TextEditingController();
-  final TextEditingController _fatController = TextEditingController();
   String _errorMessage = '';
 
   @override
   void initState() {
+    dotenv.load(fileName: ".env");
     super.initState();
   }
 
@@ -36,55 +34,116 @@ class _MealLogAdderState extends State<MealLogAdder> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    hintText: "Enter the meal's name",
                     border: OutlineInputBorder(),
                     labelText: 'Name',
                   ),
                 ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Description',
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Date',
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Calories',
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Protein',
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Carbs',
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Fat',
-                  ),
-                ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _addMealLog(MealLog(
+                      date: DateTime.now(),
+                      name: _nameController.text,
+                    ));
+                    _nameController.clear();
+                  },
                   child: const Text('Add'),
                 ),
               ],
             ),
           ),
         ));
+  }
+
+  // add meal log
+  Future<void> _addMealLog(MealLog mealLog) async {
+    log('add meal log.... ');
+    log('mealLog: $mealLog');
+
+    if (mealLog.name.isEmpty) {
+      setState(() {
+        _errorMessage = 'meal name is not given';
+        AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please enter a meal name'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      });
+      return;
+    }
+
+    // getting nutrition data from API
+    String apiKey = dotenv.env['NINJA_API_KEY_FOR_NUTRITION']!;
+
+    if (apiKey == null) {
+      log('API key is null');
+      return;
+    } else {
+      String url =
+          'https://api.api-ninjas.com/v1/nutrition?query=${mealLog.name}';
+
+      debugPrint('calling url: $url to get nutrition data');
+      http.get(Uri.parse(url), headers: {
+        'X-Api-Key': apiKey,
+      }).then((response) async {
+        if (response.statusCode == 200) {
+          // if the meal name found, assign the nutrition data to the meal log
+          mealLog.date = DateTime.now();
+          mealLog.calories = jsonDecode(response.body)[0]['calories'];
+          mealLog.servingSizeG = jsonDecode(response.body)[0]['serving_size_g'];
+          mealLog.proteinG = jsonDecode(response.body)[0]['protein_g'];
+          mealLog.fatTotalG = jsonDecode(response.body)[0]['fat_total_g'];
+          mealLog.sodiumMg = jsonDecode(response.body)[0]['sodium_mg'];
+          mealLog.carbohydratesTotalG =
+              jsonDecode(response.body)[0]['carbohydrates_total_g'];
+          mealLog.fiberG = jsonDecode(response.body)[0]['fiber_g'];
+          mealLog.sugarG = jsonDecode(response.body)[0]['sugar_g'];
+
+          // add the meal log to the database
+          try {
+            await _mealLogRepository.addMealLog(mealLog);
+            AlertDialog(
+              title: const Text('Success'),
+              content: const Text('Meal log added successfully'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+        } else {
+          debugPrint('Error: ${response.statusCode} ${response.body}');
+          AlertDialog(
+            title: const Text('Error'),
+            content: const Text(
+                'Sorry we could not find nutrition data for this meal'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        }
+      });
+    }
   }
 }

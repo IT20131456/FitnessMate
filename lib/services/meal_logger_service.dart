@@ -14,11 +14,11 @@ class MealLoggerService {
     await _mealLoggerRepository.addMealLog(mealLog);
   }
 
-  Future<void> updateMealLog(MealLog mealLog) async {
-    await _mealLoggerRepository.updateMealLog(mealLog);
+  Future<void> updateMealLog(MealLog mealLog, String id) async {
+    await _mealLoggerRepository.updateMealLog(mealLog, id);
   }
 
-  Future<void> deleteMealLog(MealLog mealLog) async {
-    await _mealLoggerRepository.deleteMealLog(mealLog);
+  Future<void> deleteMealLog(String mealLogId) async {
+    await _mealLoggerRepository.deleteMealLog(mealLogId);
   }
 }

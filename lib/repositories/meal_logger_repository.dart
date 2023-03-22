@@ -11,31 +11,39 @@ class MealLogRepository {
 
   Future addMealLog(MealLog mealLog) async {
     return await _collection.add({
-      'id': mealLog.id,
       'name': mealLog.name,
-      'description': mealLog.description,
       'date': mealLog.date,
       'calories': mealLog.calories,
-      'protein': mealLog.protein,
-      'carbs': mealLog.carbs,
-      'fat': mealLog.fat,
+      'proteinG': mealLog.proteinG,
+      'servingSizeG': mealLog.servingSizeG,
+      'fatTotalG': mealLog.fatTotalG,
+      'sodiumMg': mealLog.sodiumMg,
+      'potassiumMg': mealLog.potassiumMg,
+      'fiberG': mealLog.fiberG,
+      'cholesterolMg': mealLog.cholesterolMg,
+      'carbohydratesTotalG': mealLog.carbohydratesTotalG,
+      'sugarG': mealLog.sugarG,
     });
   }
 
-  Future<void> updateMealLog(MealLog mealLog) async {
-    return await _collection.doc(mealLog.id.toString()).update({
-      'id': mealLog.id,
+  Future<void> updateMealLog(MealLog mealLog, String id) async {
+    return await _collection.doc(id).update({
       'name': mealLog.name,
-      'description': mealLog.description,
       'date': mealLog.date,
       'calories': mealLog.calories,
-      'protein': mealLog.protein,
-      'carbs': mealLog.carbs,
-      'fat': mealLog.fat,
+      'servingSizeG': mealLog.servingSizeG,
+      'proteinG': mealLog.proteinG,
+      'fatTotalG': mealLog.fatTotalG,
+      'sodiumMg': mealLog.sodiumMg,
+      'potassiumMg': mealLog.potassiumMg,
+      'fiberG': mealLog.fiberG,
+      'cholesterolMg': mealLog.cholesterolMg,
+      'carbohydratesTotalG': mealLog.carbohydratesTotalG,
+      'sugarG': mealLog.sugarG,
     });
   }
 
-  Future deleteMealLog(MealLog mealLog) async {
-    await _collection.doc(mealLog.id.toString()).delete();
+  Future deleteMealLog(String id) async {
+    await _collection.doc(id).delete();
   }
 }
