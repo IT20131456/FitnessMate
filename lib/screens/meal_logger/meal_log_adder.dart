@@ -45,6 +45,8 @@ class _MealLogAdderState extends State<MealLogAdder> {
                 ElevatedButton(
                   onPressed: () {
                     _addMealLog(MealLog(
+                      userId:
+                          "", // TODO: add userID once the sessions are created
                       date: DateTime.now(),
                       name: _nameController.text,
                     ));

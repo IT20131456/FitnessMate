@@ -11,6 +11,7 @@ class MealLogRepository {
 
   Future addMealLog(MealLog mealLog) async {
     return await _collection.add({
+      'userId': mealLog.userId,
       'name': mealLog.name,
       'date': mealLog.date,
       'calories': mealLog.calories,
@@ -28,6 +29,7 @@ class MealLogRepository {
 
   Future<void> updateMealLog(MealLog mealLog, String id) async {
     return await _collection.doc(id).update({
+      'userId': mealLog.userId,
       'name': mealLog.name,
       'date': mealLog.date,
       'calories': mealLog.calories,

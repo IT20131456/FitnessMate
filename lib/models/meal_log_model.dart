@@ -1,4 +1,5 @@
 class MealLog {
+  late String userId;
   late String name;
   late DateTime date;
   late double calories;
@@ -13,7 +14,8 @@ class MealLog {
   late double sugarG;
 
   MealLog(
-      {this.name = '',
+      {required this.userId,
+      this.name = '',
       required this.date,
       this.calories = 0,
       this.servingSizeG = 0,
@@ -27,6 +29,7 @@ class MealLog {
       this.sugarG = 0});
 
   MealLog.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
     name = json['name'];
     date = DateTime.parse(json['date']);
     calories = json['calories'];
@@ -43,6 +46,7 @@ class MealLog {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
+    data['userId'] = userId;
     data['name'] = name;
     data['date'] = date.toIso8601String();
     data['calories'] = calories;
