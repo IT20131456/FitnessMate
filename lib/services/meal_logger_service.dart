@@ -10,6 +10,10 @@ class MealLoggerService {
     return await _mealLoggerRepository.getAllMealLogs();
   }
 
+  Future<List<MealLog>> getMealLogsByUserId(String userId) async {
+    return await _mealLoggerRepository.getMealLogsByUserId(userId);
+  }
+
   Future<void> addMealLog(MealLog mealLog) async {
     await _mealLoggerRepository.addMealLog(mealLog);
   }

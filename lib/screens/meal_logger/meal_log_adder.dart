@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MealLogAdder extends StatefulWidget {
   const MealLogAdder({super.key});
@@ -17,9 +18,14 @@ class _MealLogAdderState extends State<MealLogAdder> {
   final _mealLogRepository = MealLogRepository();
   final TextEditingController _nameController = TextEditingController();
   String _errorMessage = '';
+  late String userId = '';
 
   @override
   void initState() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      debugPrint('User ID: ${FirebaseAuth.instance.currentUser?.uid}');
+      userId = FirebaseAuth.instance.currentUser!.uid;
+    }
     dotenv.load(fileName: ".env");
     super.initState();
   }
@@ -46,7 +52,7 @@ class _MealLogAdderState extends State<MealLogAdder> {
                   onPressed: () {
                     _addMealLog(MealLog(
                       userId:
-                          "", // TODO: add userID once the sessions are created
+                          userId,
                       date: DateTime.now(),
                       name: _nameController.text,
                     ));
@@ -65,7 +71,7 @@ class _MealLogAdderState extends State<MealLogAdder> {
     log('add meal log.... ');
     log('mealLog: $mealLog');
 
-    if (mealLog.name.isEmpty) {
+    if (mealLog.name == '') {
       setState(() {
         _errorMessage = 'meal name is not given';
         AlertDialog(
@@ -86,11 +92,11 @@ class _MealLogAdderState extends State<MealLogAdder> {
 
     // getting nutrition data from API
     String apiKey = dotenv.env['NINJA_API_KEY_FOR_NUTRITION']!;
-
-    if (apiKey == null) {
-      log('API key is null');
+    if (apiKey == '') {
+      debugPrint('API key is null');
       return;
-    } else {
+    }
+
       String url =
           'https://api.api-ninjas.com/v1/nutrition?query=${mealLog.name}';
 
@@ -147,5 +153,5 @@ class _MealLogAdderState extends State<MealLogAdder> {
         }
       });
     }
-  }
+  
 }

@@ -4,9 +4,59 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MealLogRepository {
   final CollectionReference _collection =
       FirebaseFirestore.instance.collection('meal_logs');
+  // get all meal logs
+  Future<List<MealLog>> getAllMealLogs() async {
+    return await _collection.get().then((querySnapshot) {
+      List<MealLog> mealLogs = [];
+      querySnapshot.docs.forEach((doc) {
+        mealLogs.add(MealLog(
+          id: doc.id,
+          userId: doc['userId'],
+          name: doc['name'],
+          date: doc['date'].toDate(),
+          calories: doc['calories'],
+          proteinG: doc['proteinG'],
+          servingSizeG: doc['servingSizeG'],
+          fatTotalG: doc['fatTotalG'],
+          sodiumMg: doc['sodiumMg'],
+          potassiumMg: doc['potassiumMg'],
+          fiberG: doc['fiberG'],
+          cholesterolMg: doc['cholesterolMg'],
+          carbohydratesTotalG: doc['carbohydratesTotalG'],
+          sugarG: doc['sugarG'],
+        ));
+      });
+      return mealLogs;
+    });
+  }
 
-  Future getAllMealLogs() async {
-    return _collection;
+  // get meal logs by user id
+  Future<List<MealLog>> getMealLogsByUserId(String userId) async {
+    return await _collection
+        .where('userId', isEqualTo: userId)
+        .get()
+        .then((querySnapshot) {
+      List<MealLog> mealLogs = [];
+      querySnapshot.docs.forEach((doc) {
+        mealLogs.add(MealLog(
+          id: doc.id,
+          userId: doc['userId'],
+          name: doc['name'],
+          date: doc['date'].toDate(),
+          calories: doc['calories'],
+          proteinG: doc['proteinG'],
+          servingSizeG: doc['servingSizeG'],
+          fatTotalG: doc['fatTotalG'],
+          sodiumMg: doc['sodiumMg'],
+          potassiumMg: doc['potassiumMg'],
+          fiberG: doc['fiberG'],
+          cholesterolMg: doc['cholesterolMg'],
+          carbohydratesTotalG: doc['carbohydratesTotalG'],
+          sugarG: doc['sugarG'],
+        ));
+      });
+      return mealLogs;
+    });
   }
 
   Future addMealLog(MealLog mealLog) async {

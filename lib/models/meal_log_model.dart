@@ -1,4 +1,5 @@
 class MealLog {
+  late String id;
   late String userId;
   late String name;
   late DateTime date;
@@ -14,7 +15,8 @@ class MealLog {
   late double sugarG;
 
   MealLog(
-      {required this.userId,
+      {this.id = '',
+      required this.userId,
       this.name = '',
       required this.date,
       this.calories = 0,
