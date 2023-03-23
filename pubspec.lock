@@ -452,10 +452,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider
-      sha256: "04890b994ee89bfa80bf3080bfec40d5a92c5c7a785ebb02c13084a099d2b6f9"
+      sha256: c7edf82217d4b2952b2129a61d3ad60f1075b9299e629e149a8d2e39c2e6aad4
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   path_provider_android:
     dependency: transitive
     description:
@@ -524,10 +524,10 @@ packages:
     dependency: transitive
     description:
       name: pointycastle
-      sha256: db7306cf0249f838d1a24af52b5a5887c5bf7f31d8bb4e827d071dc0939ad346
+      sha256: ae73e842cdd27a3467a71d70cefd9b198538aab4fc7dde1d0e8c78c96225abf0
       url: "https://pub.dev"
     source: hosted
-    version: "3.6.2"
+    version: "3.7.1"
   process:
     dependency: transitive
     description:

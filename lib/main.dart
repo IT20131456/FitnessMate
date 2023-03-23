@@ -7,9 +7,6 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'package:fitness_mate/screens/workouts/workouts_screen.dart';
 
-
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
