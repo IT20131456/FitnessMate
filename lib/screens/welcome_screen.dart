@@ -1,5 +1,7 @@
+import 'package:fitness_mate/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class WelcomView extends StatefulWidget {
   @override
@@ -93,7 +95,13 @@ class _WelcomViewState extends State<WelcomView> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                            );
+                          },
                           child: Container(
                             width: 139,
                             height: 39,

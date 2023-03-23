@@ -81,7 +81,8 @@ flutter:
   assets:
     - assets/images/profile.jpg
     - assets/images/logo.png
-    - assets/images/login.jpg   
+    - assets/images/login.jpg 
+    - assets/images/bmi.png    
     - assets/images/bmi.png
     - assets/images/fitness1.jpg
     - assets/images/fitness2.jpg
@@ -95,7 +96,6 @@ flutter:
     - assets/alarm1.mp3
     
   
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -9,7 +9,8 @@ class BmiReportService {
     return _bmiReport;
   }
 
-  Future addBMIReport(String _name, String _gender, int _age,DateTime? _date, int _height, int _weight, String _bmiValue,String _status) async {
+  Future addBMIReport(String _name, String _gender, int _age, DateTime? _date,
+      int _height, int _weight, String _bmiValue, String _status) async {
     return await _bmiReport.add({
       "name": _name,
       "gender": _gender,
@@ -18,16 +19,17 @@ class BmiReportService {
       "height": _height,
       "weight": _weight,
       "bmiValue": _bmiValue,
-      "status":_status,
+      "status": _status,
     });
   }
 
-  Future<void> updateBMIReport(String id,String _name, String _gender, int _age,DateTime? _date) async {
+  Future<void> updateBMIReport(String id, String _name, String _gender,
+      int _age, DateTime? _date) async {
     return await _bmiReport.doc(id).update({
       "name": _name,
       "gender": _gender,
       "age": _age,
-      'date': _date,      
+      'date': _date,
     });
   }
 
