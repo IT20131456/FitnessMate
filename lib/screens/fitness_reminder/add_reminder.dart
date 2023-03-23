@@ -4,6 +4,7 @@ import 'package:fitness_mate/services/reminder_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
 
 class AddReminder extends StatefulWidget {
   const AddReminder({Key? key}) : super(key: key);
@@ -20,6 +21,10 @@ class _AddReminderState extends State<AddReminder> {
   final TextEditingController _reminderMessageController =
       TextEditingController();
 
+  late String selectedDate =
+      DateFormat('yyyy-MM-dd').format(_reminderDayController);
+  late String selectedTime =
+      '${_reminderTimeController.hour.toString().padLeft(2, '0')}:${_reminderTimeController.minute.toString().padLeft(2, '0')}';
   // Reminder Types
   bool notification = false;
   bool alarm = false;
@@ -98,15 +103,24 @@ class _AddReminderState extends State<AddReminder> {
                     padding: const EdgeInsets.only(left: 8.0, top: 10.0),
                     child: ElevatedButton.icon(
                       onPressed: () => _selectDate(context),
-                      icon: const Icon(Icons.calendar_today),
+                      icon: const Icon(
+                        Icons.calendar_today,
+                        color: Color.fromARGB(255, 20, 116, 9),
+                      ),
                       label: const Text(
                         'Select Date',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 20, 116, 9),
+                        ),
                       ),
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                           const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 18.0),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 163, 241, 154),
                         ),
                       ),
                     ),
@@ -116,15 +130,24 @@ class _AddReminderState extends State<AddReminder> {
                     padding: const EdgeInsets.only(right: 8.0, top: 10.0),
                     child: ElevatedButton.icon(
                       onPressed: () => _selectTime(context),
-                      icon: const Icon(Icons.watch_later),
+                      icon: const Icon(
+                        Icons.watch_later,
+                        color: Color.fromARGB(255, 20, 116, 9),
+                      ),
                       label: const Text(
                         'Select Time',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 20, 116, 9),
+                        ),
                       ),
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                           const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 18.0),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 163, 241, 154),
                         ),
                       ),
                     ),
@@ -147,7 +170,9 @@ class _AddReminderState extends State<AddReminder> {
                 },
                 value: selectedOption,
               ),
-              const Text("Select Type"),
+              Container(
+                  margin: const EdgeInsets.only(top: 2.0, bottom: 8.0),
+                  child: const Text("Select Type")),
               Padding(
                 padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                 child: Row(
@@ -183,7 +208,7 @@ class _AddReminderState extends State<AddReminder> {
                           side: MaterialStateProperty.all<BorderSide>(
                             const BorderSide(
                                 color: Color.fromARGB(255, 163, 241, 154),
-                                width: 2),
+                                width: 0),
                           ),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -226,7 +251,7 @@ class _AddReminderState extends State<AddReminder> {
                           side: MaterialStateProperty.all<BorderSide>(
                             const BorderSide(
                                 color: Color.fromARGB(255, 163, 241, 154),
-                                width: 2),
+                                width: 0),
                           ),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -269,7 +294,7 @@ class _AddReminderState extends State<AddReminder> {
                           side: MaterialStateProperty.all<BorderSide>(
                             const BorderSide(
                                 color: Color.fromARGB(255, 163, 241, 154),
-                                width: 2),
+                                width: 0),
                           ),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -287,34 +312,40 @@ class _AddReminderState extends State<AddReminder> {
                 height: 20,
               ),
               ElevatedButton(
-                child: const Text('Add'),
+                child: const Text(
+                  'Add Reminder',
+                  style: TextStyle(fontSize: 15),
+                ),
                 onPressed: () async {
+                  //Add Notification
+
+                  DateTime schTime = DateTime(
+                      _reminderDayController.year,
+                      _reminderDayController.month,
+                      _reminderDayController.day,
+                      _reminderTimeController.hour,
+                      _reminderTimeController.minute);
+                  NotificationService().scheduleNotification(
+                      title: 'FitnessMate Reminder',
+                      body: _reminderNameController.text,
+                      scheduledNotificationDateTime: schTime);
+                  //Add Reminder
                   final String name = _reminderNameController.text;
                   final type = _reminderTypeController;
                   final String message = _reminderMessageController.text;
-                  await ReminderRepository().addReminder(name, type, message);
+                  final String date =
+                      DateFormat('yyyy-MM-dd').format(_reminderDayController);
+                  // final String date = _reminderDayController;
+                  final String time =
+                      '${_reminderTimeController.hour.toString().padLeft(2, '0')}:${_reminderTimeController.minute.toString().padLeft(2, '0')}';
+                  await ReminderRepository()
+                      .addReminder(name, type, message, date, time);
 
                   _reminderNameController.text = '';
                   _reminderMessageController.text = '';
                   Navigator.of(context).pop();
                 },
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    // NotificationService().showNotification(
-                    //     title: "Sample Title",
-                    //     body: _reminderDayController.toString());
-                    DateTime schTime = DateTime(
-                        _reminderDayController.year,
-                        _reminderDayController.month,
-                        _reminderDayController.day,
-                        _reminderTimeController.hour,
-                        _reminderTimeController.minute);
-                    NotificationService().scheduleNotification(
-                        title: 'New Title',
-                        scheduledNotificationDateTime: schTime);
-                  },
-                  child: Text("Notification"))
             ],
           ),
         ),
@@ -337,16 +368,19 @@ class CustomDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: value,
-      hint: const Text('Select Category'),
-      onChanged: onChanged,
-      items: options.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
+    return Container(
+      margin: const EdgeInsets.only(top: 8.0, bottom: 10.0),
+      child: DropdownButton<String>(
+        value: value,
+        hint: const Text('Select Category'),
+        onChanged: onChanged,
+        items: options.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
     );
   }
 }
