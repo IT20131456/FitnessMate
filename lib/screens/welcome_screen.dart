@@ -103,7 +103,7 @@ class _WelcomViewState extends State<WelcomView> {
                             ),
                             child: Center(
                               child: Text(
-                                "Login",
+                                "Next",
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
