@@ -324,7 +324,7 @@ class _WorkoutsState extends State<Workouts> {
     );
   }
 
-  
+
 
   // Update a workout function
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
