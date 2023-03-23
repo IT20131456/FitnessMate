@@ -1,5 +1,6 @@
 import 'package:fitness_mate/screens/fitness_reminder/add_reminder.dart';
 import 'package:fitness_mate/screens/fitness_reminder/edit_reminder.dart';
+import 'package:fitness_mate/screens/fitness_reminder/view_reminder.dart';
 import 'package:fitness_mate/services/reminder_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -84,32 +85,35 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
                   return Card(
                     margin: const EdgeInsets.all(18),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side:
-                          const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                      borderRadius: BorderRadius.circular(15),
                     ),
+                    elevation: 5,
+                    color: Color.fromARGB(255, 218, 223, 218).withOpacity(0.8),
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(16),
-                      title: Text(documentData['reminderName'],
-                          style: const TextStyle(fontSize: 18)),
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          documentData['reminderName'],
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 5,
                           ),
-                          Text("Date : " + documentData['reminderName'],
-                              style: const TextStyle(fontSize: 16)),
+                          Text("Date : " + documentData['date'].toString(),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black87)),
                           const SizedBox(
                             height: 5,
                           ),
-                          Text("Time : " + documentData['type'].toString(),
-                              style: const TextStyle(fontSize: 16)),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text("Type : " + documentData['message'].toString(),
-                              style: const TextStyle(fontSize: 16)),
+                          Text("Time : " + documentData['time'].toString(),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black87)),
                         ],
                       ),
                       trailing: SizedBox(
@@ -120,31 +124,22 @@ class _ReminderDashboardState extends State<ReminderDashboard> {
                               icon: const Icon(Icons.edit),
                               color: Colors.green,
                               onPressed: () => _update(documents[index]),
-                              // onPressed: () => Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => BmiFormUpdate(
-                              //       documentSnapshot: documents[index],
-                              //     ),
-                              //   ),
-                              // ),
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete),
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 244, 106, 96),
                               onPressed: () => _delete(documents[index].id),
-                              //onPressed: () => _delete(documents[index].id)),
                             )
                           ],
                         ),
                       ),
-                      // onTap: () {
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => BmiReport(
-                      //               documentSnapshot: documents[index])));
-                      // },
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewReminder(
+                                    documentSnapshot: documents[index])));
+                      },
                     ),
                   );
                 },
