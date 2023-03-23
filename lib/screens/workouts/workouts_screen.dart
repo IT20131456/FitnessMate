@@ -324,7 +324,7 @@ class _WorkoutsState extends State<Workouts> {
     );
   }
 
-  
+
 
   // Update a workout function
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
@@ -410,9 +410,9 @@ class _WorkoutsState extends State<Workouts> {
                     _workoutExercisesController.text = '';
                     _workoutDateController.text = '';
 
-                    // Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Workouts()));
+                    Navigator.of(context).pop();
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => Workouts()));
                   },
                 )
               ],
