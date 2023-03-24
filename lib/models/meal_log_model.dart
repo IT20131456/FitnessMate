@@ -13,6 +13,7 @@ class MealLog {
   late int cholesterolMg;
   late double carbohydratesTotalG;
   late double sugarG;
+  late String mealType;
 
   MealLog(
       {this.id = '',
@@ -28,7 +29,8 @@ class MealLog {
       this.fiberG = 0,
       this.cholesterolMg = 0,
       this.carbohydratesTotalG = 0,
-      this.sugarG = 0});
+      this.sugarG = 0,
+      this.mealType = ''});
 
   MealLog.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -44,6 +46,7 @@ class MealLog {
     cholesterolMg = json['cholesterolMg'];
     carbohydratesTotalG = json['carbohydratesTotalG'];
     sugarG = json['sugarG'];
+    mealType = json['mealType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +64,7 @@ class MealLog {
     data['cholesterolMg'] = cholesterolMg;
     data['carbohydratesTotalG'] = carbohydratesTotalG;
     data['sugarG'] = sugarG;
+    data['mealType'] = mealType;
     return data;
   }
 }

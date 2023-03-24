@@ -32,7 +32,6 @@ class _MealLogsState extends State<MealLogs> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Meal Logs'),
         ),
         body: Container(
           height: double.infinity,
@@ -66,6 +65,12 @@ class _MealLogsState extends State<MealLogs> {
                       ),
                       Text('Date: ${_mealLogList[index].date}'),
                       Text('Calories: ${_mealLogList[index].calories}'),
+                    ],
+                  ),
+                  leading: Column(
+                    children: const [
+                      Icon(Icons.emoji_food_beverage_outlined),
+                      Icon(Icons.rice_bowl),
                     ],
                   ),
                   trailing: Row(
@@ -104,6 +109,7 @@ class _MealLogsState extends State<MealLogs> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Date: ${mealLog.date}'),
+                Text('Meal Type: ${mealLog.mealType}'),
                 Text('Serving Size: ${mealLog.servingSizeG} g'),
                 Text('Calories: ${mealLog.calories}'),
                 Text('Protein: ${mealLog.proteinG} g'),
@@ -142,6 +148,17 @@ class _MealLogsState extends State<MealLogs> {
 
   // update meal log
   void _updateMealLog(MealLog mealLog) async {
+    if (mealLog.name.isEmpty) {
+      Fluttertoast.showToast(
+          msg: 'Meal name cannot be empty',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    }
     showDialog(
         context: context,
         builder: (context) {
@@ -170,6 +187,28 @@ class _MealLogsState extends State<MealLogs> {
                     ),
                     onChanged: (value) {
                       mealLog.date = value as DateTime;
+                    },
+                  ),
+                  TextField(
+                    controller: TextEditingController(
+                        text: mealLog.servingSizeG.toString()),
+                    decoration: const InputDecoration(
+                      hintText: 'Enter serving size',
+                      labelText: 'Serving Size (g)',
+                    ),
+                    onChanged: (value) {
+                      mealLog.servingSizeG = value as double;
+                    },
+                  ),
+                  TextField(
+                    controller: TextEditingController(
+                        text: mealLog.mealType.toString()),
+                    decoration: const InputDecoration(
+                      hintText: 'Enter meal type',
+                      labelText: 'Meal Type',
+                    ),
+                    onChanged: (value) {
+                      mealLog.mealType = value;
                     },
                   ),
                   TextField(
@@ -321,6 +360,7 @@ class _MealLogsState extends State<MealLogs> {
                       backgroundColor: Colors.red,
                       textColor: Colors.white,
                       fontSize: 16.0);
+                  _getMealList();
                 },
                 child: const Text('Delete'),
               ),

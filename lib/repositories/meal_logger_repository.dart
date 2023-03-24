@@ -24,6 +24,7 @@ class MealLogRepository {
           cholesterolMg: doc['cholesterolMg'],
           carbohydratesTotalG: doc['carbohydratesTotalG'],
           sugarG: doc['sugarG'],
+          mealType: doc['mealType'],
         ));
       });
       return mealLogs;
@@ -53,6 +54,7 @@ class MealLogRepository {
           cholesterolMg: doc['cholesterolMg'],
           carbohydratesTotalG: doc['carbohydratesTotalG'],
           sugarG: doc['sugarG'],
+          mealType: doc['mealType'],
         ));
       });
       return mealLogs;
@@ -74,6 +76,7 @@ class MealLogRepository {
       'cholesterolMg': mealLog.cholesterolMg,
       'carbohydratesTotalG': mealLog.carbohydratesTotalG,
       'sugarG': mealLog.sugarG,
+      'mealType': mealLog.mealType,
     });
   }
 
@@ -92,6 +95,7 @@ class MealLogRepository {
       'cholesterolMg': mealLog.cholesterolMg,
       'carbohydratesTotalG': mealLog.carbohydratesTotalG,
       'sugarG': mealLog.sugarG,
+      'mealType': mealLog.mealType,
     });
   }
 

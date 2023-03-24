@@ -4,6 +4,7 @@ import 'package:fitness_mate/repositories/meal_logger_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,7 @@ class _MealLogAdderState extends State<MealLogAdder> {
   final TextEditingController _nameController = TextEditingController();
   String _errorMessage = '';
   late String userId = '';
+  final TextEditingController _mealTypeController = TextEditingController();
 
   @override
   void initState() {
@@ -35,7 +37,6 @@ class _MealLogAdderState extends State<MealLogAdder> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('New Meal Log'),
         ),
         body: Container(
           height: double.infinity,
@@ -46,39 +47,102 @@ class _MealLogAdderState extends State<MealLogAdder> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white.withOpacity(0.8),
-            ),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        hintText: "1lb brisket and fries",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _addMealLog(MealLog(
-                          userId: userId,
-                          date: DateTime.now(),
-                          name: _nameController.text,
-                        ));
-                        _nameController.clear();
-                      },
-                      child: const Text('Add'),
-                    ),
-                  ],
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: Text(
+                  'Add a meal',
+                  style: GoogleFonts.dancingScript(
+                    fontSize: 60,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 200, left: 20, right: 20, bottom: 20),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white.withOpacity(0.9),
+                ),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        // add a dropdown to select the meal type
+                        Container(
+                          margin: const EdgeInsets.only(top: 20, bottom: 20),
+                          child: DropdownButton(
+                              style: const TextStyle(color: Colors.black),
+                              hint: _mealTypeController.text == ''
+                                  ? const Text('Select Meal Type')
+                                  : Text(_mealTypeController.text),
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 'Breakfast',
+                                  child: Text('Breakfast'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Lunch',
+                                  child: Text('Lunch'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Dinner',
+                                  child: Text('Dinner'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Snack',
+                                  child: Text('Snack'),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  _mealTypeController.text = value.toString();
+                                });
+                              }),
+                        ),
+                        TextField(
+                          style: const TextStyle(color: Colors.black),
+                          controller: _nameController,
+                          decoration: const InputDecoration(
+                            hintText: "Meal name *",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: const Text(
+                            'Eg: 1lb brisket and fries',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 112, 112, 112)),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 100),
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _addMealLog(MealLog(
+                                userId: userId,
+                                date: DateTime.now(),
+                                name: _nameController.text,
+                              ));
+                              _nameController.clear();
+                            },
+                            child: const Text('Add'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ));
   }
@@ -188,6 +252,8 @@ class _MealLogAdderState extends State<MealLogAdder> {
             jsonDecode(response.body)[0]['carbohydrates_total_g'];
         mealLog.fiberG = jsonDecode(response.body)[0]['fiber_g'];
         mealLog.sugarG = jsonDecode(response.body)[0]['sugar_g'];
+        mealLog.cholesterolMg = jsonDecode(response.body)[0]['cholesterol_mg'];
+        mealLog.mealType = _mealTypeController.text;
 
         // add the meal log to the database
         try {
@@ -200,6 +266,8 @@ class _MealLogAdderState extends State<MealLogAdder> {
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
+          _nameController.clear();
+          _mealTypeController.clear();
         } catch (e) {
           debugPrint(e.toString());
         }

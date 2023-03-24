@@ -3,8 +3,8 @@ import 'package:fitness_mate/models/meal_log_model.dart';
 import 'package:fitness_mate/repositories/meal_logger_repository.dart';
 import 'package:fitness_mate/screens/meal_logger/meal_log_adder.dart';
 import 'package:fitness_mate/screens/meal_logger/meal_log_list.dart';
-import 'package:fitness_mate/services/meal_logger_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class MealLoggerMainScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class MealLoggerMainScreen extends StatefulWidget {
 class _MealLoggerMainScreenState extends State<MealLoggerMainScreen> {
   late String userId = '';
   List<MealLog> mealLogs = [];
-  MealLogRepository _mealLogRepository = MealLogRepository();
+  final MealLogRepository _mealLogRepository = MealLogRepository();
 
   @override
   void initState() {
@@ -50,38 +50,58 @@ class _MealLoggerMainScreenState extends State<MealLoggerMainScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                child: Text(
+                  'Your Meal Logger',
+                  style: GoogleFonts.dancingScript(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
               // graph
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(
-                    left: 10, right: 10, bottom: 10, top: 20),
+                    left: 5, right: 5, bottom: 10, top: 20),
                 color: Colors.white.withOpacity(0.8),
                 height: 300,
                 child: Center(
-                  child: SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    title: ChartTitle(text: 'Calories'),
-                    legend: Legend(isVisible: true),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <ChartSeries>[
-                      // Render column series
-                      ColumnSeries<MealLog, String>(
+                    child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  // Chart title
+                  title: ChartTitle(text: 'Calory Intake'),
+                  // Enable legend
+                  legend: Legend(isVisible: true),
+                  // Enable tooltip
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  series: <ChartSeries<MealLog, String>>[
+                    LineSeries<MealLog, String>(
+                        color: Colors.green,
                         dataSource: mealLogs,
                         xValueMapper: (MealLog mealLog, _) =>
                             mealLog.date.toString(),
                         yValueMapper: (MealLog mealLog, _) => mealLog.calories,
                         name: 'Calories',
-                        dataLabelSettings:
-                            const DataLabelSettings(isVisible: true),
-                      ),
-                    ],
-                  ),
-                ),
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(isVisible: true))
+                  ],
+                )),
               ),
               const SizedBox(height: 20),
               Container(
-                margin: const EdgeInsets.only(bottom: 10, top: 150),
+                margin: const EdgeInsets.only(bottom: 10, top: 60),
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.5),
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -97,6 +117,12 @@ class _MealLoggerMainScreenState extends State<MealLoggerMainScreen> {
               const SizedBox(height: 20),
               Container(
                 margin: const EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.5),
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
