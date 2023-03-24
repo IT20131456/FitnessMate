@@ -78,13 +78,13 @@ class MealLogRepository {
   }
 
   Future<void> updateMealLog(MealLog mealLog, String id) async {
-    return await _collection.doc(id).update({
+    await _collection.doc(id).update({
       'userId': mealLog.userId,
       'name': mealLog.name,
       'date': mealLog.date,
       'calories': mealLog.calories,
-      'servingSizeG': mealLog.servingSizeG,
       'proteinG': mealLog.proteinG,
+      'servingSizeG': mealLog.servingSizeG,
       'fatTotalG': mealLog.fatTotalG,
       'sodiumMg': mealLog.sodiumMg,
       'potassiumMg': mealLog.potassiumMg,

@@ -3,6 +3,7 @@ import 'package:fitness_mate/models/meal_log_model.dart';
 import 'package:fitness_mate/repositories/meal_logger_repository.dart';
 import 'package:fitness_mate/services/meal_logger_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MealLogs extends StatefulWidget {
   const MealLogs({Key? key}) : super(key: key);
@@ -271,8 +272,19 @@ class _MealLogsState extends State<MealLogs> {
               ),
               TextButton(
                 onPressed: () {
-                  _mealLogService.updateMealLog(mealLog, mealLog.id);
+                  debugPrint('Updating meal log...');
                   Navigator.of(context).pop();
+                  _mealLogService.updateMealLog(mealLog, mealLog.id);
+                  Fluttertoast.showToast(
+                      msg: 'Meal Log Updated',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+
+                  _getMealList();
                 },
                 child: const Text('Update'),
               ),
@@ -301,6 +313,14 @@ class _MealLogsState extends State<MealLogs> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   _mealLogService.deleteMealLog(docId);
+                  Fluttertoast.showToast(
+                      msg: 'Meal Log Deleted',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                 },
                 child: const Text('Delete'),
               ),
