@@ -23,7 +23,7 @@ class _BmiReportsViewState extends State<BmiReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
+    return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -63,23 +63,21 @@ class _BmiReportsViewState extends State<BmiReportsView> {
                         children: [
                           SizedBox(
                             height: 5,
-                          ),                          
+                          ),
                           Text("BMI Value : " + documentData['bmiValue'],
                               style: TextStyle(fontSize: 16)),
                           SizedBox(
                             height: 5,
                           ),
                           Text("Status : " + documentData['status'],
-                              style: TextStyle(fontSize: 16,
-                              color: Color.fromARGB(255, 224, 21, 89))
-                              ),
-                              
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 224, 21, 89))),
                           SizedBox(
                             height: 5,
                           ),
                           Text(
-                              "Date : " +
-                                  DateFormat('dd/MM/yyyy').format(date),
+                              "Date : " + DateFormat('dd/MM/yyyy').format(date),
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Color.fromARGB(255, 2, 90, 8))),

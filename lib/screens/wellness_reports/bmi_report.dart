@@ -37,7 +37,7 @@ class BmiReport extends StatelessWidget {
               ),
               child: Container(
                 margin:
-                EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 60),
+                    EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 60),
                 // padding: const EdgeInsets.all(10.0),
                 child: Center(
                   child: Column(
