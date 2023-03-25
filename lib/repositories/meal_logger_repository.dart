@@ -61,6 +61,7 @@ class MealLogRepository {
     });
   }
 
+  // add new meal log
   Future addMealLog(MealLog mealLog) async {
     return await _collection.add({
       'userId': mealLog.userId,
@@ -80,6 +81,7 @@ class MealLogRepository {
     });
   }
 
+  // update meal log
   Future<void> updateMealLog(MealLog mealLog, String id) async {
     await _collection.doc(id).update({
       'userId': mealLog.userId,
@@ -99,6 +101,7 @@ class MealLogRepository {
     });
   }
 
+  // delete meal log
   Future deleteMealLog(String id) async {
     await _collection.doc(id).delete();
   }
