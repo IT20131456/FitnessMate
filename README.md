@@ -1,4 +1,4 @@
-# fitness_mate_CTSE_Assignment
+# Fitness_Mate_App_CTSE_Assignment
 
 Group Members
 
