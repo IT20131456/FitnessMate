@@ -2,8 +2,8 @@
 import 'package:fitness_mate/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitness_mate/screens/login_screen.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:fitness_mate/screens/welcome_screen.dart';
 
 
 Future<void> main() async {
@@ -22,10 +22,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         appBarTheme: AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 7, 167, 13),
+          // backgroundColor: Color.fromARGB(255, 7, 167, 13),
+           backgroundColor: Color(0xFF40D876),
+
         ),
       ),
-      home: LoginScreen(),
+      home: WelcomView(),
     );
   }
 }

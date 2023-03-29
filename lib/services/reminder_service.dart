@@ -9,18 +9,25 @@ class ReminderRepository {
     return _reminder;
   }
 
-  Future addReminder(String name, String type, String message) async {
+  Future addReminder(String name, String type, String message, String date,
+      String time) async {
     return await _reminder.add({
       "reminderName": name,
       "type": type,
       "message": message,
+      "date": date,
+      "time": time,
     });
   }
 
-  Future<void> updateReminder(String id, String name) async {
+  Future<void> updateReminder(String id, String name, String type,
+      String message, String date, String time) async {
     return await _reminder.doc(id).update({
-      "taskName": name,
-      "completionStatus": true,
+      "reminderName": name,
+      "type": type,
+      "message": message,
+      "date": date,
+      "time": time,
     });
   }
 
