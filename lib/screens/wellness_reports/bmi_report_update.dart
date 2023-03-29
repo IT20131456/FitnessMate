@@ -47,7 +47,7 @@ class _BmiFormUpdateState extends State<BmiFormUpdate> {
         ),
         child: SingleChildScrollView(
           child: Card(
-            margin: EdgeInsets.only(left: 10,right: 10,top: 50,bottom: 50),
+            margin: EdgeInsets.only(left: 10, right: 10, top: 50, bottom: 50),
             color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.95),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -147,8 +147,9 @@ class _BmiFormUpdateState extends State<BmiFormUpdate> {
                       SizedBox(height: 16),
                       TextFormField(
                         readOnly: true,
-                        initialValue:
-                            _date == null ? '' : _date.toString().substring(0, 10),
+                        initialValue: _date == null
+                            ? ''
+                            : _date.toString().substring(0, 10),
                         decoration: InputDecoration(
                           labelText: 'Measurement Date *',
                           labelStyle: TextStyle(
@@ -176,7 +177,7 @@ class _BmiFormUpdateState extends State<BmiFormUpdate> {
                         onPressed: () async {
                           if (_formKey.currentState?.validate() == true) {
                             _formKey.currentState?.save();
-                
+
                             // Calculate the BMI value
                             try {
                               // Update the BMI report in Firebase database
@@ -187,7 +188,7 @@ class _BmiFormUpdateState extends State<BmiFormUpdate> {
                                 _age,
                                 _date,
                               );
-                
+
                               // Show success message
                               showDialog(
                                 context: context,
@@ -210,7 +211,8 @@ class _BmiFormUpdateState extends State<BmiFormUpdate> {
                               // Show error message
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content: Text('Failed to update BMI report')),
+                                    content:
+                                        Text('Failed to update BMI report')),
                               );
                             }
                           }
